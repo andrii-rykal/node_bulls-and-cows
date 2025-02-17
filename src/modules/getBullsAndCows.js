@@ -22,11 +22,26 @@ function getBullsAndCows(userInput, numberToGuess) {
     cows: 0,
   };
 
+  const userUsed = [];
+  const guessUsed = [];
+
   for (let i = 0; i < numberToGuess.length; i++) {
     if (numberToGuess[i] === userInput[i]) {
       result.bulls++;
-    } else if (userInput.includes(numberToGuess[i])) {
-      result.cows++;
+      userUsed[i] = true;
+      guessUsed[i] = true;
+    }
+  }
+
+  for (let i = 0; i < numberToGuess.length; i++) {
+    if (!userUsed[i]) {
+      for (let j = 0; j < numberToGuess.length; j++) {
+        if (!guessUsed[j] && userInput[i] === numberToGuess[j]) {
+          result.cows++;
+          guessUsed[j] = true;
+          break;
+        }
+      }
     }
   }
 
